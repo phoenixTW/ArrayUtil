@@ -109,7 +109,7 @@ void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_sa
 
 }
 
-void test_areEqual_for_float_should_return_1_when_two_array_util_elements_not_are_same () {
+void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_not_same () {
 	ArrayUtil array1, array2;
 	float *a1, *a2;
 	int isSuccess;
@@ -125,6 +125,60 @@ void test_areEqual_for_float_should_return_1_when_two_array_util_elements_not_ar
 
 	a1[0] = 1.1; a1[1] = 1.1;
 	a2[0] = 1.1; a2[1] = 2.6;
+	array1.base = a1;
+	array2.base = a2;
+
+	isSuccess = areEqual(array1, array2);
+
+	assertEqual(isSuccess, 0);
+	free(a1);
+	free(a2);
+
+}
+
+void test_areEqual_for_char_should_return_1_when_two_array_util_elements_are_same () {
+	ArrayUtil array1, array2;
+	char *a1, *a2;
+	int isSuccess;
+
+	array1.typeSize = sizeof(char);
+	array1.length = 2;
+
+	array2.typeSize = sizeof(char);
+	array2.length = 2;
+
+	a1 = (char*)malloc(array1.typeSize * array1.length);
+	a2 = (char*)malloc(array2.typeSize * array2.length);
+
+	a1[0] = 'c'; a1[1] = 'd';
+	a2[0] = 'c'; a2[1] = 'd';
+	array1.base = a1;
+	array2.base = a2;
+
+	isSuccess = areEqual(array1, array2);
+
+	assertEqual(isSuccess, 1);
+	free(a1);
+	free(a2);
+
+}
+
+void test_areEqual_for_char_should_return_1_when_two_array_util_elements_are_not_same () {
+	ArrayUtil array1, array2;
+	char *a1, *a2;
+	int isSuccess;
+
+	array1.typeSize = sizeof(char);
+	array1.length = 2;
+
+	array2.typeSize = sizeof(char);
+	array2.length = 2;
+
+	a1 = (char*)malloc(array1.typeSize * array1.length);
+	a2 = (char*)malloc(array2.typeSize * array2.length);
+
+	a1[0] = 'c'; a1[1] = 'd';
+	a2[0] = 'c'; a2[1] = 'f';
 	array1.base = a1;
 	array2.base = a2;
 
