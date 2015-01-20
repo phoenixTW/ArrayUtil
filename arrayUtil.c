@@ -47,3 +47,8 @@ int findIndex(ArrayUtil array, void *element) {
 
 	return -1;
 }
+
+void dispose (ArrayUtil array) {
+	free(array.base);
+	array.base = NULL;
+}

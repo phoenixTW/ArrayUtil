@@ -50,4 +50,9 @@ int findIndex(ArrayUtil util, void* element)
 
 		int x = 5;
 
-		findIndex(util, &x) will return 3 
+		findIndex(util, &x) will return 3
+
+									v1.2
+
+void dispose(ArrayUtil util)
+	-a method dispose to free the memory allocated for the Array inside array util

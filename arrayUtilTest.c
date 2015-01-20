@@ -338,8 +338,8 @@ void test_findIndex_should_give_minus_1_as_index_of_the_array () {
 
 void test_findIndex_should_give_minus_1_as_index_of_the_float_type_array () {
 	ArrayUtil array1;
-	int *a, sizeofFloat;
-	float element;
+	int sizeofFloat;
+	float element, *a;
 	sizeofFloat = sizeof(float);
 	array1 = create(sizeofFloat, 2);
 
@@ -403,3 +403,18 @@ void test_findIndex_should_give_1_as_index_of_the_float_type_array () {
 
 // 	assertEqual(findIndex(array1, &element), 0);
 // }
+
+void test_dispose_should_free_the_memory_of_util_array () {
+	ArrayUtil array;
+	int *a;
+	array = create(sizeof(int), 2);
+	a = ((int*)(array.base));
+
+	a[0] = 1;
+	a[1] = 2;
+
+	dispose(array); 
+	/*	Think for some test
+		When we do free, the memory doesn't get free instantly 
+		So, that could be accessable after doing free also*/
+}
