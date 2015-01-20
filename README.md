@@ -55,4 +55,5 @@ int findIndex(ArrayUtil util, void* element)
 									v1.2
 
 void dispose(ArrayUtil util)
+
 	-a method dispose to free the memory allocated for the Array inside array util
