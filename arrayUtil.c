@@ -52,3 +52,14 @@ void dispose (ArrayUtil array) {
 	free(array.base);
 	array.base = NULL;
 }
+
+void *findFirst(ArrayUtil array, MatchFunc *match, void *hint) {
+	int count;
+	int *convArray = array.base;
+
+	for(count = 0; count < array.length; count++)
+		if(match(&hint, ((void*)(&convArray[count]))))
+			return convArray[count];
+
+	return NULL;
+}

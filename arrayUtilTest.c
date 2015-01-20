@@ -418,3 +418,29 @@ void test_dispose_should_free_the_memory_of_util_array () {
 		When we do free, the memory doesn't get free instantly 
 		So, that could be accessable after doing free also*/
 }
+
+int isEven(void *hint, void *element) {
+	int* _hint = (int*)hint;
+	int* _element = (int*)element; 
+	return ((*_element) % (*_hint)) == 0;
+}
+
+void test_findFirst_should_return_4_as_a_even_value () {
+	ArrayUtil array;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
+
+	array = create(sizeof(int), 3);
+
+	a = (int*)(array.base);
+
+	a[0] = 1;
+	a[1] = 4;
+	a[2] = 6;
+
+	match= &isEven;
+	hint = 2;
+	element = (int*)findFirst(array, match, ((void*)hint));
+	assertEqual(element, 4);
+}
