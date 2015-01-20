@@ -16,7 +16,9 @@ The ArrayUtil contains
     	-which is how many elements are there.
 
 
-	NB: To use the array you just have to cast the base to the pointer of the respective type: like int* a, float* a ,etc and then a[5] will give you the fifth int or float
+	NB: To use the array you just have to cast the base to the 
+		pointer of the respective type: like int* a, float* a ,etc and 
+		then a[5] will give you the fifth int or float
 
 int areEqual(ArrayUtil a, ArrayUtil b)
 
@@ -34,7 +36,9 @@ ArrayUtil resize(ArrayUtil util, int length)
 
     will resize the array and return the modified ArrayUtil.
 
-    the array contents should be trimmed if new size is less and copied over if the new size is more.
+    the array contents should be trimmed 
+    	if new size is less and copied over 
+    	if the new size is more.
 
 									v1.1
 
