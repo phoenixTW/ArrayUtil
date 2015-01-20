@@ -292,14 +292,114 @@ void test_should_compress_the_size_of_an_array_when_new_size_is_smaller_than_the
 	sizeofChar = sizeof(char);
 	array1 = create(sizeofChar, 2);
 
-	printf("%p\n", array1.base);
 
 	((char*)(array1.base))[0] = 'c';
 	((char*)(array1.base))[1] = 'd';
 
 	array1 = resize(array1, 1);
 
-	printf("%p\n", array1.base);
 	assertEqual(array1.length, 1);
 	assertEqual(((char*)(array1.base))[0], 'c');
 }
+
+void test_findIndex_should_give_2_as_index_of_the_array () {
+	ArrayUtil array1;
+	int *a, sizeofInt, element;
+	sizeofInt = sizeof(int);
+	array1 = create(sizeofInt, 2);
+
+	a = ((int*)(array1.base));
+
+	a[0] = 1;
+	a[1] = 2;
+
+	element = 2;
+
+	assertEqual(findIndex(array1, &element), 1);
+	element = 1;
+	assertEqual(findIndex(array1, &element), 0);
+}
+
+void test_findIndex_should_give_minus_1_as_index_of_the_array () {
+	ArrayUtil array1;
+	int *a, sizeofInt, element;
+	sizeofInt = sizeof(int);
+	array1 = create(sizeofInt, 2);
+
+	a = ((int*)(array1.base));
+
+	a[0] = 1;
+	a[1] = 2;
+
+	element = 3;
+
+	assertEqual(findIndex(array1, &element), -1);
+}
+
+void test_findIndex_should_give_minus_1_as_index_of_the_float_type_array () {
+	ArrayUtil array1;
+	int *a, sizeofFloat;
+	float element;
+	sizeofFloat = sizeof(float);
+	array1 = create(sizeofFloat, 2);
+
+	a = ((float*)(array1.base));
+
+	a[0] = 1.1;
+	a[1] = 2.4;
+
+	element = 1.3;
+
+	assertEqual(findIndex(array1, &element), -1);
+}
+
+void test_findIndex_should_give_0_as_index_of_the_float_type_array () {
+	ArrayUtil array1;
+	int sizeofFloat;
+	float element, *a;
+	sizeofFloat = sizeof(float);
+	array1 = create(sizeofFloat, 2);
+
+	a = ((float*)(array1.base));
+
+	a[0] = 1.1;
+	a[1] = 2.4;
+
+	element = 1.1;
+
+	assertEqual(findIndex(array1, &element), 0);
+}
+
+void test_findIndex_should_give_1_as_index_of_the_float_type_array () {
+	ArrayUtil array1;
+	int sizeofFloat;
+	float element, *a;
+	sizeofFloat = sizeof(float);
+	array1 = create(sizeofFloat, 2);
+
+	a = ((float*)(array1.base));
+
+	a[0] = 1.1;
+	a[1] = 2.4;
+
+	element = 2.4;
+
+	assertEqual(findIndex(array1, &element), 1);
+}
+
+// void test_findIndex_should_give_0_as_index_of_the_char_type_array () {
+// 	ArrayUtil array1;
+// 	int sizeofchar;
+// 	char element, *a;
+// 	sizeofchar = sizeof(char);
+// 	array1 = create(sizeofchar, 2);
+
+// 	a = ((char*)(array1.base));
+
+// 	a[0] = 'a';
+// 	a[1] = 'b';
+
+// 	element = 'a';
+
+// 	assertEqual(findIndex(array1, &element), 0);
+// }

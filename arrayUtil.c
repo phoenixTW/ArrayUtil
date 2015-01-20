@@ -33,3 +33,17 @@ ArrayUtil resize(ArrayUtil array, int length) {
 	array.base = realloc(array.base, newSize);
 	return array;
 }
+
+int findIndex(ArrayUtil array, void *element) {
+	int count;
+
+	float *convArray = array.base,
+		  *ele = element;
+
+	for(count = 0; count < array.length; count++) {
+		if(convArray[count] == *ele)
+			return count;
+	}
+
+	return -1;
+}
