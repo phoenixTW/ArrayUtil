@@ -58,6 +58,12 @@ void test_areEqual_for_Students_should_return_1_when_sets_of_data_are_same () {
 	assertEqual(areEqual(util1, util2), 1);
 }
 
+void test_areEqual_for_Students_should_return_0_when_sets_of_data_not_are_same () {
+	ArrayUtil util1 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
+	ArrayUtil util2 = { (students[]){{1, 100}, {2, 100}}, sizeof(students), 2};
+	assertEqual(areEqual(util1, util2), 0);
+}
+
 void test_should_return_1_when_two_same_type_of_array_are_created_as_int_type () {
 	ArrayUtil util1, util2;
 	util1 = create(INT_SIZE, 2);
