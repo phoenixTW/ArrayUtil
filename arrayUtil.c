@@ -1,5 +1,6 @@
 #include "arrayUtil.h"
 #include <stdio.h>
+// #include <stdli.h>
 
 int areEqual (ArrayUtil array1, ArrayUtil array2) {
 	int count;
@@ -63,18 +64,19 @@ void *findFirst(ArrayUtil array, MatchFunc *match, void *hint) {
 	return NULL;
 }
 
-void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
-	int *reversedArray,
-		count,
-		*convArray = array.base;
+// void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
+// 	int *reversedArray,
+// 		count,
+// 		*convArray = array.base,
+// 		*dummyArray;
 
-	ArrayUtil dummyArray;
+// 	ArrayUtil dummyArray;
 
-	dummyArray = create(array.typeSize, array.length);
+// 	dummyArray = create(array.typeSize, array.length);
+// 	*convArray = array.base
+// 	reversedArray = calloc(array.typeSize, array.length);
 
-	reversedArray = calloc(array.typeSize, array.length);
+// 	for(count = 0; count < array.length; count++)
+// 		reversedArray[count] = convArray[array.length - count - 1];
 
-	for(count = 0; count < array.length; count++)
-		reversedArray[count] = convArray[array.length - count - 1];
-
-}
+// }
