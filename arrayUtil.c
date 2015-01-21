@@ -1,6 +1,6 @@
 #include "arrayUtil.h"
 #include <stdio.h>
-// #include <stdli.h>
+#include <stdlib.h>
 
 int areEqual (ArrayUtil array1, ArrayUtil array2) {
 	int count;
@@ -29,21 +29,31 @@ ArrayUtil create(int typeSize, int length) {
 }
 
 ArrayUtil resize(ArrayUtil array, int length) {
+	ArrayUtil newUtil;
 	int newSize = array.typeSize * length;
-	array.length = newSize;
-	array.base = realloc(array.base, newSize);
-	return array;
+	newUtil.length = newSize;
+	newUtil.base = realloc(array.base, newSize);
+	return newUtil;
 }
 
 int findIndex(ArrayUtil array, void *element) {
-	int count;
+	int count, size = sizeof(element);
 
-	float *convArray = array.base,
-		  *ele = element;
+	for(count = 0; count < (array.length * array.typeSize); count++) {
+		if(sizeof(int) == size){
+			if(((int*)array.base)[count] == *((int*)element))
+				return count;			
+		}
 
-	for(count = 0; count < array.length; count++) {
-		if(convArray[count] == *ele)
-			return count;
+		if(sizeof(float) == size){
+			if(((float*)array.base)[count] == *((float*)element))
+				return count;			
+		}
+	}
+
+	for(count = 0; count < (array.length * array.typeSize); count++) {
+		if(((char*)array.base)[count] == *((char*)element))
+				return count;			
 	}
 
 	return -1;

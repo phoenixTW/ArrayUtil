@@ -126,6 +126,26 @@ void test_should_return_1_when_two_char_type_of_array_are_created_whose_length_a
 	dispose(util2);
 }
 
+void test_should_return_1_when_two_students_type_of_array_are_created_whose_length_are_same () {
+	ArrayUtil util1, util2;
+	util1 = create(sizeof(students), 2);
+	util2 = create(sizeof(students), 2);
+
+	assertEqual(areEqual(util1, util2), 1);
+	dispose(util1);
+	dispose(util2);
+}
+
+void test_should_return_0_when_two_students_type_of_array_are_created_whose_length_are_not_same () {
+	ArrayUtil util1, util2;
+	util1 = create(sizeof(students), 2);
+	util2 = create(sizeof(students), 3);
+
+	assertEqual(areEqual(util1, util2), 0);
+	dispose(util1);
+	dispose(util2);
+}
+
 void test_should_compress_the_size_of_an_array_from_length_3_to_2 () {
 	ArrayUtil util1, util2;
 	util1 = create(CHAR_SIZE, 2);
@@ -148,7 +168,6 @@ void test_should_compress_the_size_of_an_array_when_new_size_is_smaller_than_the
 	int isSuccess, sizeofChar;
 	sizeofChar = sizeof(char);
 	array1 = create(sizeofChar, 2);
-
 
 	((char*)(array1.base))[0] = 'c';
 	((char*)(array1.base))[1] = 'd';
@@ -244,22 +263,23 @@ void test_findIndex_should_give_1_as_index_of_the_float_type_array () {
 	assertEqual(findIndex(array1, &element), 1);
 }
 
-// void test_findIndex_should_give_0_as_index_of_the_char_type_array () {
-// 	ArrayUtil array1;
-// 	int sizeofchar;
-// 	char element, *a;
-// 	sizeofchar = sizeof(char);
-// 	array1 = create(sizeofchar, 2);
+void test_findIndex_should_give_0_as_index_of_the_char_type_array () {
+	ArrayUtil array1;
+	int sizeofchar;
+	char element, *a;
+	sizeofchar = sizeof(char);
+	array1 = create(sizeofchar, 2);
 
-// 	a = ((char*)(array1.base));
+	a = ((char*)(array1.base));
 
-// 	a[0] = 'a';
-// 	a[1] = 'b';
+	a[0] = 'a';
+	a[1] = 'b';
 
-// 	element = 'a';
+	element = 'a';
 
-// 	assertEqual(findIndex(array1, &element), 0);
-// }
+	assertEqual(findIndex(array1, &element), 0);
+	dispose(array1);
+}
 
 void test_dispose_should_free_the_memory_of_util_array () {
 	ArrayUtil array;
