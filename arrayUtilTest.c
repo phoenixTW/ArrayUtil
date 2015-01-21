@@ -8,55 +8,15 @@ void test_areEqual_should_return_1_when_two_array_util_are_same () {
 }
 
 void test_areEqual_should_return_0_when_two_array_util_are_not_same () {
-	ArrayUtil array1, array2;
-	int *a1, *a2;
-	int isSuccess;
-
-	array1.typeSize = sizeof(int);
-	array1.length = 3;
-
-	array2.typeSize = sizeof(int);
-	array2.length = 4;
-
-	a1 = (int*)malloc(array1.typeSize * array1.length);
-	a2 = (int*)malloc(array2.typeSize * array2.length);
-
-	array1.base = a1;
-	array2.base = a2;
-
-	isSuccess = areEqual(array1, array2);
-
-	assertEqual(isSuccess, 0);
-	free(a1);
-	free(a2);
-
+	ArrayUtil util1 = { (int[]){1, 2, 3}, sizeof(int), 3};
+	ArrayUtil util2 = { (int[]){1, 2}, sizeof(int), 2};
+	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_areEqual_should_return_0_when_two_array_util_elements_are_not_same () {
-	ArrayUtil array1, array2;
-	int *a1, *a2;
-	int isSuccess;
-
-	array1.typeSize = sizeof(int);
-	array1.length = 3;
-
-	array2.typeSize = sizeof(int);
-	array2.length = 3;
-
-	a1 = (int*)malloc(array1.typeSize * array1.length);
-	a2 = (int*)malloc(array2.typeSize * array2.length);
-	
-	a1[0] = 1;
-
-	array1.base = a1;
-	array2.base = a2;
-
-	isSuccess = areEqual(array1, array2);
-
-	assertEqual(isSuccess, 0);
-	free(a1);
-	free(a2);
-
+	ArrayUtil util1 = { (int[]){1, 2}, sizeof(int), 2};
+	ArrayUtil util2 = { (int[]){3, 2}, sizeof(int), 2};
+	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_same () {
