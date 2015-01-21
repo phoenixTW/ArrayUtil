@@ -83,3 +83,14 @@ void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
 			return convArray[count];
 	return NULL;
 }
+
+int count(ArrayUtil util, MatchFunc* match, void* hint) {
+	int count, total = 0;
+	int *convArray = util.base;
+
+	for(count = 0; count < util.length; count++)
+		if(match(&hint, ((void*)(&convArray[count]))))
+			total++;
+
+	return total;
+}

@@ -390,6 +390,7 @@ void test_findLast_should_return_4_as_a_even_value () {
 	hint = 2;
 	element = (int*)findLast(util, match, ((void*)hint));
 	assertEqual(element, 4);
+	dispose(util);
 }
 
 void test_findLast_should_return_NULL_as_a_return_value () {
@@ -410,6 +411,47 @@ void test_findLast_should_return_NULL_as_a_return_value () {
 	hint = 2;
 	element = (int*)findLast(util, match, ((void*)hint));
 	assertEqual(element, 0);
+	dispose(util);
 }
 
 // Need to write more test for findLast() rather than int
+
+void test_count_should_return_2_as_the_number_of_even_value () {
+	ArrayUtil array;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
+
+	array = create(sizeof(int), 3);
+
+	a = (int*)(array.base);
+
+	a[0] = 1;
+	a[1] = 4;
+	a[2] = 6;
+
+	match= &isEven;
+	hint = 2;
+	element = count(array, match, ((void*)hint));
+	assertEqual(element, 2);
+}
+
+void test_count_should_return_0_as_the_number_of_even_value_if_not_exists_in_the_array () {
+	ArrayUtil array;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
+
+	array = create(sizeof(int), 3);
+
+	a = (int*)(array.base);
+
+	a[0] = 1;
+	a[1] = 7;
+	a[2] = 9;
+
+	match= &isEven;
+	hint = 2;
+	element = count(array, match, ((void*)hint));
+	assertEqual(element, 0);
+}
