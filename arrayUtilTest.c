@@ -1,127 +1,113 @@
 #include "expr_assert.h"
 #include "arrayUtil.h"
 
+#define INT_SIZE sizeof(int)
+#define FLOAT_SIZE sizeof(float)
+#define CHAR_SIZE sizeof(char)
+
+
 void test_areEqual_should_return_1_when_two_array_util_are_same () {
-	ArrayUtil util1 = { (int[]){1, 2}, sizeof(int), 2};
-	ArrayUtil util2 = { (int[]){1, 2}, sizeof(int), 2};
+	ArrayUtil util1 = { (int[]){1, 2}, INT_SIZE, 2};
+	ArrayUtil util2 = { (int[]){1, 2}, INT_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 1);
 }
 
 void test_areEqual_should_return_0_when_two_array_util_are_not_same () {
-	ArrayUtil util1 = { (int[]){1, 2, 3}, sizeof(int), 3};
-	ArrayUtil util2 = { (int[]){1, 2}, sizeof(int), 2};
+	ArrayUtil util1 = { (int[]){1, 2, 3}, INT_SIZE, 3};
+	ArrayUtil util2 = { (int[]){1, 2}, INT_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_areEqual_should_return_0_when_two_array_util_elements_are_not_same () {
-	ArrayUtil util1 = { (int[]){1, 2}, sizeof(int), 2};
-	ArrayUtil util2 = { (int[]){3, 2}, sizeof(int), 2};
+	ArrayUtil util1 = { (int[]){1, 2}, INT_SIZE, 2};
+	ArrayUtil util2 = { (int[]){3, 2}, INT_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_same () {
-	ArrayUtil util1 = { (float[]){1.1, 2.2}, sizeof(float), 2};
-	ArrayUtil util2 = { (float[]){1.1, 2.2}, sizeof(float), 2};
+	ArrayUtil util1 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
+	ArrayUtil util2 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 1);
 }
 
 void test_areEqual_for_float_should_return_1_when_two_array_util_elements_are_not_same () {
-	ArrayUtil util1 = { (float[]){1.2, 2.2}, sizeof(float), 2};
-	ArrayUtil util2 = { (float[]){1.1, 2.2}, sizeof(float), 2};
+	ArrayUtil util1 = { (float[]){1.2, 2.2}, FLOAT_SIZE, 2};
+	ArrayUtil util2 = { (float[]){1.1, 2.2}, FLOAT_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_areEqual_for_char_should_return_1_when_two_array_util_elements_are_same () {
-	ArrayUtil util1 = { (char[]){'a', 'b'}, sizeof(char), 2};
-	ArrayUtil util2 = { (char[]){'a', 'b'}, sizeof(char), 2};
+	ArrayUtil util1 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
+	ArrayUtil util2 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 1);
 }
 
 void test_areEqual_for_char_should_return_0_when_two_array_util_elements_are_not_same () {
-	ArrayUtil util1 = { (char[]){'a', 'b'}, sizeof(char), 2};
-	ArrayUtil util2 = { (char[]){'c', 'b'}, sizeof(char), 2};
+	ArrayUtil util1 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
+	ArrayUtil util2 = { (char[]){'c', 'b'}, CHAR_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 0);
 }
 
 void test_should_return_1_when_two_same_type_of_array_are_created_as_int_type () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofInt;
-	sizeofInt = sizeof(int);
-	array1 = create(sizeofInt, 2);
-	array2 = create(sizeofInt, 2);
+	ArrayUtil util1, util2;
+	util1 = create(INT_SIZE, 2);
+	util2 = create(INT_SIZE, 2);
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 1);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 1);
+	dispose(util1);
+	dispose(util2);
 }
 
 void test_should_return_0_when_two_different_size_of_array_are_created_as_int_type () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofInt;
-	sizeofInt = sizeof(int);
-	array1 = create(sizeofInt, 2);
-	array2 = create(sizeofInt, 3);
+	ArrayUtil util1, util2;
+	util1 = create(INT_SIZE, 2);
+	util2 = create(INT_SIZE, 3);
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 0);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 0);
+	dispose(util1);
+	dispose(util2);
 }
 
-void test_should_return_0_when_two_different_type_of_array_are_created_as_int_type () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofInt;
-	sizeofInt = sizeof(float);
-	array1 = create(sizeofInt, 2);
-	array2 = create(sizeof(int), 2);
+void test_should_return_0_when_two_different_type_of_array_are_created () {
+	ArrayUtil util1, util2;
+	util1 = create(INT_SIZE, 2);
+	util2 = create(FLOAT_SIZE, 2);
 
-	((float*)(array1.base))[0] = 1.2;
+	((float*)util2.base)[0] = 1.1;
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 0);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 0);
+	dispose(util1);
+	dispose(util2);
 }
 
 void test_should_return_1_when_two_float_type_of_array_are_created_whose_length_are_same () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofFloat;
-	sizeofFloat = sizeof(float);
-	array1 = create(sizeofFloat, 2);
-	array2 = create(sizeofFloat, 2);
+	ArrayUtil util1, util2;
+	util1 = create(FLOAT_SIZE, 2);
+	util2 = create(FLOAT_SIZE, 2);
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 1);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 1);
+	dispose(util1);
+	dispose(util2);
 }
 
 void test_should_return_0_when_one_float_and_one_char_type_of_array_are_created_whose_length_are_same () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofFloat, sizeofChar;
-	sizeofFloat = sizeof(float);
-	sizeofChar = sizeof(char);
-	array1 = create(sizeofFloat, 2);
-	array2 = create(sizeofChar, 2);
+	ArrayUtil util1, util2;
+	util1 = create(INT_SIZE, 2);
+	util2 = create(CHAR_SIZE, 2);
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 0);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 0);
+	dispose(util1);
+	dispose(util2);
 }
 
 void test_should_return_1_when_two_char_type_of_array_are_created_whose_length_are_same () {
-	ArrayUtil array1, array2;
-	int isSuccess, sizeofChar;
-	sizeofChar = sizeof(char);
-	array1 = create(sizeofChar, 2);
-	array2 = create(sizeofChar, 2);
+	ArrayUtil util1, util2;
+	util1 = create(CHAR_SIZE, 2);
+	util2 = create(CHAR_SIZE, 2);
 
-	isSuccess = areEqual(array1, array2);
-	assertEqual(isSuccess, 1);
-	free(array1);
-	free(array2);
+	assertEqual(areEqual(util1, util2), 1);
+	dispose(util1);
+	dispose(util2);
 }
 
 void test_should_compress_the_size_of_an_array () {
