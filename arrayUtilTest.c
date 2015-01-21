@@ -5,6 +5,10 @@
 #define FLOAT_SIZE sizeof(float)
 #define CHAR_SIZE sizeof(char)
 
+typedef struct studentForm {
+	int roll;
+	int marks;
+} students;
 
 void test_areEqual_should_return_1_when_two_array_util_are_same () {
 	ArrayUtil util1 = { (int[]){1, 2}, INT_SIZE, 2};
@@ -46,6 +50,12 @@ void test_areEqual_for_char_should_return_0_when_two_array_util_elements_are_not
 	ArrayUtil util1 = { (char[]){'a', 'b'}, CHAR_SIZE, 2};
 	ArrayUtil util2 = { (char[]){'c', 'b'}, CHAR_SIZE, 2};
 	assertEqual(areEqual(util1, util2), 0);
+}
+
+void test_areEqual_for_Students_should_return_1_when_sets_of_data_are_same () {
+	ArrayUtil util1 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
+	ArrayUtil util2 = { (students[]){{1, 100}, {2, 200}}, sizeof(students), 2};
+	assertEqual(areEqual(util1, util2), 1);
 }
 
 void test_should_return_1_when_two_same_type_of_array_are_created_as_int_type () {
@@ -110,20 +120,21 @@ void test_should_return_1_when_two_char_type_of_array_are_created_whose_length_a
 	dispose(util2);
 }
 
-void test_should_compress_the_size_of_an_array () {
-	ArrayUtil array1;
-	int isSuccess, sizeofChar;
-	sizeofChar = sizeof(char);
-	array1 = create(sizeofChar, 2);
+void test_should_compress_the_size_of_an_array_from_length_3_to_2 () {
+	ArrayUtil util1, util2;
+	util1 = create(CHAR_SIZE, 2);
 
-	((char*)(array1.base))[0] = 'c';
-	((char*)(array1.base))[1] = 'd';
+	((char*)(util1.base))[0] = 'c';
+	((char*)(util1.base))[1] = 'd';
 
-	array1 = resize(array1, 3);
-	assertEqual(array1.length, 3);
-	assertEqual(((char*)(array1.base))[0], 'c');
-	assertEqual(((char*)(array1.base))[1], 'd');
-	assertEqual(((char*)(array1.base))[2], 0);
+	util2 = resize(util1, 3);
+
+	assertEqual(util2.length, 3);
+	assertEqual(areEqual(util1, util2), 0);
+	assertEqual(((char*)(util2.base))[0], 'c');
+	assertEqual(((char*)(util2.base))[1], 'd');
+	assertEqual(((char*)(util2.base))[2], 0);
+	dispose(util1);
 }
 
 void test_should_compress_the_size_of_an_array_when_new_size_is_smaller_than_the_previous_size () {
@@ -144,9 +155,8 @@ void test_should_compress_the_size_of_an_array_when_new_size_is_smaller_than_the
 
 void test_findIndex_should_give_2_as_index_of_the_array () {
 	ArrayUtil array1;
-	int *a, sizeofInt, element;
-	sizeofInt = sizeof(int);
-	array1 = create(sizeofInt, 2);
+	int *a, element;
+	array1 = create(INT_SIZE, 2);
 
 	a = ((int*)(array1.base));
 
@@ -158,6 +168,7 @@ void test_findIndex_should_give_2_as_index_of_the_array () {
 	assertEqual(findIndex(array1, &element), 1);
 	element = 1;
 	assertEqual(findIndex(array1, &element), 0);
+	dispose(array1);
 }
 
 void test_findIndex_should_give_minus_1_as_index_of_the_array () {
