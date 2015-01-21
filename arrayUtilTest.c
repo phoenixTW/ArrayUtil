@@ -340,26 +340,76 @@ void test_findFirst_should_return_NULL_as_a_even_value () {
 	hint = 2;
 	element = (int*)findFirst(array, match, ((void*)hint));
 	assertEqual(element, 0);
+	dispose(array);
 }
 
+// int findGreaterThan (void *hint, void *element) {
+// 	float* _hint = (float*)hint;
+// 	float* _element = (float*)element; 
+// 	return ((*_element) > (*_hint)) ? 1 : 0;	
+// }
+
+// void test_findFirst_should_return_2_5_as_greater_than_2_1_in_an_float_type_array () {
+// 	ArrayUtil array;
+// 	float hint;
+// 	MatchFunc* match;
+// 	float element, *a;
+
+// 	array = create(sizeof(float), 3);
+
+// 	a = (float*)(array.base);
+
+// 	a[0] = 1.1;
+// 	a[1] = 2.5;
+// 	a[2] = 4.5;
+
+// 	match= &findGreaterThan;
+// 	(void*)hint = (2.1);
+// 	findFirst(array, match, hint);
+// 	// element = (float*)findFirst(array, match, ((void*)hint));
+// 	// assertEqual(element, 2.5);
+// 	dispose(array);		
+// }
 // Need to write for other data types rather than int
 
-// void test_findLast_should_return_4_as_a_even_value () {
-// 	ArrayUtil array;
-// 	int hint;
-// 	MatchFunc* match;
-// 	int element, *a;
+void test_findLast_should_return_4_as_a_even_value () {
+	ArrayUtil util;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
 
-// 	array = create(sizeof(int), 3);
+	util = create(sizeof(int), 3);
 
-// 	a = (int*)(array.base);
+	a = (int*)(util.base);
 
-// 	a[0] = 1;
-// 	a[1] = 6;
-// 	a[2] = 4;
+	a[0] = 1;
+	a[1] = 6;
+	a[2] = 4;
 
-// 	match= &isEven;
-// 	hint = 2;
-// 	element = (int*)findLast(array, match, ((void*)hint));
-// 	assertEqual(element, 4);
-// }
+	match= &isEven;
+	hint = 2;
+	element = (int*)findLast(util, match, ((void*)hint));
+	assertEqual(element, 4);
+}
+
+void test_findLast_should_return_NULL_as_a_return_value () {
+	ArrayUtil util;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
+
+	util = create(sizeof(int), 3);
+
+	a = (int*)(util.base);
+
+	a[0] = 1;
+	a[1] = 7;
+	a[2] = 9;
+
+	match= &isEven;
+	hint = 2;
+	element = (int*)findLast(util, match, ((void*)hint));
+	assertEqual(element, 0);
+}
+
+// Need to write more test for findLast() rather than int
