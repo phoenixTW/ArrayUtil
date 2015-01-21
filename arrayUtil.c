@@ -60,6 +60,21 @@ void *findFirst(ArrayUtil array, MatchFunc *match, void *hint) {
 	for(count = 0; count < array.length; count++)
 		if(match(&hint, ((void*)(&convArray[count]))))
 			return convArray[count];
-
 	return NULL;
+}
+
+void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
+	int *reversedArray,
+		count,
+		*convArray = array.base;
+
+	ArrayUtil dummyArray;
+
+	dummyArray = create(array.typeSize, array.length);
+
+	reversedArray = calloc(array.typeSize, array.length);
+
+	for(count = 0; count < array.length; count++)
+		reversedArray[count] = convArray[array.length - count - 1];
+
 }

@@ -2,31 +2,9 @@
 #include "arrayUtil.h"
 
 void test_areEqual_should_return_1_when_two_array_util_are_same () {
-	ArrayUtil array1, array2;
-	int *a1, *a2;
-	int isSuccess;
-
-	array1.typeSize = sizeof(int);
-	array1.length = 2;
-
-	array2.typeSize = sizeof(int);
-	array2.length = 2;
-
-	a1 = (int*)malloc(array1.typeSize * array1.length);
-	a2 = (int*)malloc(array2.typeSize * array2.length);
-
-	a1[0] = 1; a1[1] = 2;
-	a2[0] = 1; a2[1] = 2;
-
-	array1.base = a1;
-	array2.base = a2;
-
-	isSuccess = areEqual(array1, array2);
-
-	assertEqual(isSuccess, 1);
-	free(a1);
-	free(a2);
-
+	ArrayUtil util1 = { (int[]){1, 2}, sizeof(int), 2};
+	ArrayUtil util2 = { (int[]){1, 2}, sizeof(int), 2};
+	assertEqual(areEqual(util1, util2), 1);
 }
 
 void test_areEqual_should_return_0_when_two_array_util_are_not_same () {
@@ -444,3 +422,45 @@ void test_findFirst_should_return_4_as_a_even_value () {
 	element = (int*)findFirst(array, match, ((void*)hint));
 	assertEqual(element, 4);
 }
+
+void test_findFirst_should_return_NULL_as_a_even_value () {
+	ArrayUtil array;
+	int hint;
+	MatchFunc* match;
+	int element, *a;
+
+	array = create(sizeof(int), 3);
+
+	a = (int*)(array.base);
+
+	a[0] = 1;
+	a[1] = 7;
+	a[2] = 45;
+
+	match= &isEven;
+	hint = 2;
+	element = (int*)findFirst(array, match, ((void*)hint));
+	assertEqual(element, 0);
+}
+
+// Need to write for other data types rather than int
+
+// void test_findLast_should_return_4_as_a_even_value () {
+// 	ArrayUtil array;
+// 	int hint;
+// 	MatchFunc* match;
+// 	int element, *a;
+
+// 	array = create(sizeof(int), 3);
+
+// 	a = (int*)(array.base);
+
+// 	a[0] = 1;
+// 	a[1] = 6;
+// 	a[2] = 4;
+
+// 	match= &isEven;
+// 	hint = 2;
+// 	element = (int*)findLast(array, match, ((void*)hint));
+// 	assertEqual(element, 4);
+// }
