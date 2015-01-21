@@ -86,11 +86,16 @@ void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
 
 int count(ArrayUtil util, MatchFunc* match, void* hint) {
 	int count, total = 0;
-	int *convArray = util.base;
+	char *convArray = util.base;
 
-	for(count = 0; count < util.length; count++)
-		if(match(&hint, ((void*)(&convArray[count]))))
+	void *element = malloc(util.typeSize);
+
+	for(count = 0; count < util.length; count++){
+		memcpy(element,&(convArray[(count*util.typeSize)]),util.typeSize);
+		if(match(hint, element))
 			total++;
+	}
 
+	free(element);
 	return total;
 }

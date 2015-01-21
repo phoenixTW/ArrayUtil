@@ -299,7 +299,7 @@ void test_dispose_should_free_the_memory_of_util_array () {
 int isEven(void *hint, void *element) {
 	int* _hint = (int*)hint;
 	int* _element = (int*)element; 
-	return ((*_element) % (*_hint)) == 0;
+	return (((*_element) % (*_hint)) == 0) ? 1 : 0;
 }
 
 void test_findFirst_should_return_4_as_a_even_value () {
@@ -432,7 +432,7 @@ void test_count_should_return_2_as_the_number_of_even_value () {
 
 	match= &isEven;
 	hint = 2;
-	element = count(array, match, ((void*)hint));
+	element = count(array, match, &hint);
 	assertEqual(element, 2);
 }
 
@@ -452,6 +452,31 @@ void test_count_should_return_0_as_the_number_of_even_value_if_not_exists_in_the
 
 	match= &isEven;
 	hint = 2;
-	element = count(array, match, ((void*)hint));
+	element = count(array, match, &hint);
 	assertEqual(element, 0);
+}
+
+int is3_2(void *hint, void *element) {
+	float* _hint = (float*)hint;
+	float* _element = (float*)element; 
+	return (*_hint) == (*_element);
+}
+
+void test_count_should_return_2_as_the_number_of_number_of_3_2 () {
+	ArrayUtil array;
+	float hint;
+	MatchFunc* match;
+	float *a;
+
+	array = create(sizeof(float), 3);
+
+	a = (float*)(array.base);
+
+	a[0] = 3.2;
+	a[1] = 4.5;
+	a[2] = 3.2;
+
+	match= &is3_2;
+	hint = 3.2;
+	assertEqual(count(array, match, &hint), 2);
 }
