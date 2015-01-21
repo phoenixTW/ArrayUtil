@@ -479,4 +479,31 @@ void test_count_should_return_2_as_the_number_of_number_of_3_2 () {
 	match= &is3_2;
 	hint = 3.2;
 	assertEqual(count(array, match, &hint), 2);
+	dispose(array);
+}
+
+int isC(void *hint, void *element) {
+	char* _hint = (char*)hint;
+	char* _element = (char*)element; 
+	return (*_hint) == (*_element);
+}
+
+void test_count_should_return_2_as_the_number_of_number_of_c_in_the_array () {
+	ArrayUtil array;
+	char hint;
+	MatchFunc* match;
+	char *a;
+
+	array = create(sizeof(char), 3);
+
+	a = (char*)(array.base);
+
+	a[0] = 'a';
+	a[1] = 'c';
+	a[2] = 'c';
+
+	match= &isC;
+	hint = 'c';
+	assertEqual(count(array, match, &hint), 2);
+	dispose(array);
 }
