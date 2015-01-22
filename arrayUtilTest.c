@@ -507,3 +507,79 @@ void test_count_should_return_2_as_the_number_of_number_of_c_in_the_array () {
 	assertEqual(count(array, match, &hint), 2);
 	dispose(array);
 }
+
+int numberGreaterThan (void *hint, void *element) {
+	int* _hint = (int*)hint;
+	int* _element = (int*)element; 
+	return (*_hint) < (*_element);	
+}
+
+void test_filter_should_return_3_as_the_number_of_matched_elements() {
+	ArrayUtil util = { (int[]){1, 2, 3, 4, 5, 6}, INT_SIZE, 6};
+	int *destination, maxLength = 3, hint = 2;
+	MatchFunc* match;
+
+	match = &numberGreaterThan;
+	destination = (int*)calloc(INT_SIZE * maxLength);
+	assertEqual(filter(util, match, &hint, &destination, maxLength), 3);
+}
+
+void test_filter_should_return_4_as_the_number_of_matched_elements() {
+	ArrayUtil util = { (int[]){1, 2, 3, 4, 5, 6, 7, 8, 9}, INT_SIZE, 9};
+	int *destination, maxLength = 4, hint = 2;
+	MatchFunc* match;
+
+	match = &numberGreaterThan;
+	destination = (int*)calloc(INT_SIZE * maxLength);
+	assertEqual(filter(util, match, &hint, &destination, maxLength), 4);
+	free(destination);
+}
+
+int numberGreaterThanForFloat (void *hint, void *element) {
+	float* _hint = (float*)hint;
+	float* _element = (float*)element; 
+
+	return (*_hint) < (*_element);
+}
+
+void test_filter_function_should_return_3_as_the_number_of_matched_elements() {
+	ArrayUtil util = { (float[]){1.1, 2.2, 3.3, 4.4, 5.5, 6.6}, FLOAT_SIZE, 6};
+	float *destination, hint = 2.1;
+	MatchFunc* match;
+
+	int maxLength = 3;
+
+	match = &numberGreaterThanForFloat;
+	destination = (float*)calloc(INT_SIZE * maxLength);
+	assertEqual(filter(util, match, &hint, &destination, maxLength), 3);
+}
+
+int characterGreaterThan (void *hint, void *element) {
+	char* _hint = (char*)hint;
+	char* _element = (char*)element; 
+
+	return (*_hint) < (*_element);
+}
+
+void test_filter_should_return_4_as_the_number_of_matched_elements_for_characters() {
+	ArrayUtil util = { (int[]){'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}, INT_SIZE, 9};
+	int *destination, maxLength = 4, hint = 'd';
+	MatchFunc* match;
+
+	match = &characterGreaterThan;
+	destination = (int*)calloc(INT_SIZE * maxLength);
+	assertEqual(filter(util, match, &hint, &destination, maxLength), 4);
+	free(destination);
+}
+
+
+
+/* --------------------------- Collaboration Tests ------------------------------ */
+
+void test_create_returns_same_array_if_array_lengths_are_same_and_values_are_same() {
+    ArrayUtil a,b;
+    int expected = 1,actual;
+    a = create(sizeof(int),2);
+    b = create(sizeof(int),2);
+    assert(areEqual(a,b) == 1);
+}
