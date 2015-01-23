@@ -1,11 +1,12 @@
 #include "arrayUtil.h"
 #include <stdio.h>
-// #include <stdli.h>
+#include <stdlib.h>
 
 int areEqual (ArrayUtil array1, ArrayUtil array2) {
 	int count;
 	char *a1 = ((char*)(array1.base));
 	char *a2 = ((char*)(array2.base));
+
 	if(array1.length != array2.length || array1.typeSize != array2.typeSize)
 		return 0;
 

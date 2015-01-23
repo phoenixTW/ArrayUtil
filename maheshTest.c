@@ -65,7 +65,7 @@ void test_findIndex_returns_index_of_the_integer_element_where_it_presents(){
 }
 
 void test_resize_returns_new_Array_util_with_String_array_of_new_length_by_putting_0s_in_new_created_spaces(){
-	ArrayUtil util1, util2;
+    ArrayUtil util1, util2;
     String array1[] = {"Mahesh","Kumar"}, arr1, arr2;
     util1 = create(sizeof(String), 2);
     util2 = create(sizeof(String), 5);
@@ -81,3 +81,18 @@ void test_resize_returns_new_Array_util_with_String_array_of_new_length_by_putti
 
     assertEqual(areEqual(resize(util1, 5), util2), 1);    
 }
+
+// void test_resize_returns_new_Array_util_with_String_array_of_new_length_by_removing_extra_values(){
+// 	ArrayUtil util1, util2;
+//     util1 = create(sizeof(String), 3);
+//     util2 = create(sizeof(String), 2);
+
+//     ((String*)(util1.base))[0] = "Mahesh";
+//     ((String*)(util1.base))[1] = "Kumar";
+//     ((String*)(util1.base))[2] = "Kolla";
+    
+//     ((String*)(util2.base))[0] = "Mahesh";
+//     ((String*)(util2.base))[1] = "Kolla";
+
+//     assertEqual(areEqual(resize(util1, 2), util2), 1);    
+// }
