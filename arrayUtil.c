@@ -31,8 +31,9 @@ ArrayUtil create(int typeSize, int length) {
 ArrayUtil resize(ArrayUtil array, int length) {
 	ArrayUtil newUtil;
 	int newSize = array.typeSize * length;
-	newUtil.length = newSize;
+	newUtil.length = length;
 	newUtil.base = realloc(array.base, newSize);
+	newUtil.typeSize = array.typeSize;
 	return newUtil;
 }
 
@@ -76,11 +77,18 @@ void *findFirst(ArrayUtil array, MatchFunc *match, void *hint) {
 
 void *findLast (ArrayUtil array, MatchFunc *match, void *hint) {
 	int count;
+	void *element = malloc(array.typeSize);
 	int *convArray = array.base;
 
-	for(count = array.length - 1; count > 0; count--)
-		if(match(&hint, ((void*)(&convArray[count]))))
-			return convArray[count];
+	for(count = array.length - 1; count > 0; count--){
+		memcpy(element, &(convArray[(count)]), array.typeSize);
+		if(match(hint, element)){
+			free(element);
+			return convArray[(count)];
+		}
+	}
+
+	free(element);	
 	return NULL;
 }
 
@@ -91,7 +99,7 @@ int count(ArrayUtil util, MatchFunc* match, void* hint) {
 	void *element = malloc(util.typeSize);
 
 	for(count = 0; count < util.length; count++){
-		memcpy(element,&(convArray[(count*util.typeSize)]),util.typeSize);
+		memcpy(element,&(convArray[(count * util.typeSize)]),util.typeSize);
 		if(match(hint, element))
 			total++;
 	}
