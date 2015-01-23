@@ -49,3 +49,10 @@ void test_findIndex_returns_index_of_the_char_element_where_it_presents(){
     ArrayUtil util1 = {array1,sizeof(char),6};
     assertEqual(findIndex(util1,&element), 4);
 }
+
+void test_findIndex_returns_index_of_the_float_element_where_it_presents(){
+    float array1[] = {1.1,2.2,3.3,4.4};
+    float element = 4.4;
+    ArrayUtil util1 = {array1,sizeof(float),4};
+    assertEqual(findIndex(util1,&element), 3);
+}
