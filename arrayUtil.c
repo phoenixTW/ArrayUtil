@@ -65,13 +65,18 @@ void dispose (ArrayUtil array) {
 	array.base = NULL;
 }
 
-void *findFirst(ArrayUtil array, MatchFunc *match, void *hint) {
+void *findFirst(ArrayUtil util, MatchFunc *match, void *hint) {
 	int count;
-	int *convArray = array.base;
-
-	for(count = 0; count < array.length; count++)
-		if(match(&hint, ((void*)(&convArray[count]))))
-			return convArray[count];
+	void* element = malloc(util.typeSize);
+	char* base = (char*) util.base;
+	
+	for (count = 0; count < util.length; count++){
+		element = &(base[count * util.typeSize]);
+		if(match(hint, element)){
+			return element;
+		}
+	}
+	
 	return NULL;
 }
 

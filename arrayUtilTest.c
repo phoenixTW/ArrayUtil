@@ -318,7 +318,7 @@ void test_findFirst_should_return_4_as_a_even_value () {
 
 	match= &isEven;
 	hint = 2;
-	element = (int*)findFirst(array, match, ((void*)hint));
+	element = *(int*)findFirst(array, match, ((void*)hint));
 	assertEqual(element, 4);
 }
 
