@@ -53,3 +53,105 @@ void test_create_001(){
     assertEqual(areEqual(util1, util2), YES);
     dispose(util2);
 }
+
+void test_create_002(){
+    log("returns an ArrayUtil with bytes initialized to NULL for char");
+    ArrayUtil util1 = {array_null_null, sizeOf_char, 2};
+    ArrayUtil util2 = create(sizeOf_char, 2);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+void test_create_003(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for float");
+    ArrayUtil util1 = {array_flt_flt, sizeOf_float, 2};
+    ArrayUtil util2 = create(sizeOf_float, 2);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_004(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for double");
+    ArrayUtil util1 = {array_dble_dble, sizeOf_double, 2};
+    ArrayUtil util2 = create(sizeOf_double, 2);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+void test_create_005(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for char[256]");
+    ArrayUtil util1 = {array_empty_strings, sizeOf_String, 2};
+    ArrayUtil util2 = create(sizeOf_String, 2);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_006(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for int[10]");
+    ArrayUtil util1 = {array_int10_0s, sizeOf_int10, 1};
+    ArrayUtil util2 = create(sizeOf_int10, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_007(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for float[5]");
+    ArrayUtil util1 = {array_float5_0s, sizeOf_float5, 1};
+    ArrayUtil util2 = create(sizeOf_float5, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_008(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for struct");
+    ArrayUtil util1 = {array_Students, sizeOf_Student, 1};
+    ArrayUtil util2 = create(sizeOf_Student, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_009(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for void *");
+    ArrayUtil util1 = {array_void_stars, sizeOf_void_star, 1};
+    ArrayUtil util2 = create(sizeOf_void_star, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_010(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for char *");
+    ArrayUtil util1 = {array_char_stars, sizeOf_char_star, 1};
+    ArrayUtil util2 = create(sizeOf_char_star, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+
+void test_create_011(){
+    log("returns an ArrayUtil with bytes initialized to ZERO for int *");
+    ArrayUtil util1 = {array_int_stars, sizeOf_int_star, 1};
+    ArrayUtil util2 = create(sizeOf_int_star, 1);
+    assertEqual(areEqual(util1, util2), YES);
+    dispose(util2);
+}
+//findFirst and findLas with STRUCT>>>>>
+// Student array_3_Students[3] = {{"Abu", 2, 88.5},{"Babu", 2, 98.25},{"Cbabu", 2, 68.0}};
+// int hasPassed(void* hint, void *item){
+//     Student student = *(Student*)item;
+//     float passMark = *(float*)hint;
+//     return (student.percentage >= passMark);
+// }
+
+// void test_findLast_returns_the_last_student_who_has_passed_the_exam_struct_array(){
+//     ArrayUtil a = {array_3_Students,sizeof(Student),3};
+//     Student *got;
+//     String name;
+//     float passMark = 80.0;
+//     got = (Student*)findLast(a,hasPassed,&passMark);
+//     assertEqual(strcmp((*got).name,"Babu"),0);
+// }
+// void test_findFirst_returns_the_first_student_who_has_passed_the_exam_struct_array(){
+//     ArrayUtil a = {array_3_Students,sizeof(Student),3};
+//     Student *got;
+//     String name;
+//     float passMark = 80.0;
+//     got = (Student*)findFirst(a,hasPassed,&passMark);
+//     assertEqual(strcmp((*got).name,"Abu"),0);
+// }
