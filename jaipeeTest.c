@@ -25,3 +25,24 @@ void test_create_allocates_space_for_INT_array_and_assigns_zero_to_all_bytes(){
     assertEqual(areEqual(expectedUtil,util),1);
     dispose(util);
 }
+
+void test_resize_returns_CHAR_array_within_structure_with_new_allocated_space_less_than_previous(){
+    ArrayUtil resizedArray, util, expectedUtil;
+    util = create(sizeof(char),5);
+    expectedUtil = create(sizeof(char),2);
+    ((char*)(util.base))[0] = 'a';
+    ((char*)(util.base))[1] = 'e';
+    ((char*)(util.base))[2] = 'i';
+    ((char*)(util.base))[3] = 'o';
+    ((char*)(util.base))[4] = 'u';
+
+    ((char*)(expectedUtil.base))[0] = 'a';
+    ((char*)(expectedUtil.base))[1] = 'e';
+
+
+    resizedArray = resize(util, 2);
+    assertEqual(areEqual(expectedUtil, resizedArray),1);
+    dispose(resizedArray);
+    dispose(util);
+    dispose(expectedUtil);
+}

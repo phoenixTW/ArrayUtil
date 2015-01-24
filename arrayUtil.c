@@ -30,12 +30,13 @@ ArrayUtil create(int typeSize, int length) {
 }
 
 ArrayUtil resize(ArrayUtil array, int length) {
-	ArrayUtil newUtil;
-	int newSize = array.typeSize * length;
-	newUtil.length = length;
-	newUtil.base = realloc(array.base, newSize);
-	newUtil.typeSize = array.typeSize;
-	return newUtil;
+	int newTypeSize;
+	ArrayUtil util = create(array.typeSize, length);
+	newTypeSize = length >= array.length ? array.length * array.typeSize : length * array.typeSize;
+
+	memcpy(util.base, array.base, newTypeSize);
+
+	return util;
 }
 
 int findIndex(ArrayUtil array, void *element) {
