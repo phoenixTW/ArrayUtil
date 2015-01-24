@@ -118,10 +118,12 @@ int count(ArrayUtil util, MatchFunc* match, void* hint) {
 int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems ){
 	int count;
 	int total = 0;
-	char** _destination =(char**) destination;
+	char** _destination;
 	char* base = (char*) util.base;
 	void * element ;
-	
+	*destination = calloc(util.typeSize, util.length);
+	_destination = (char**) destination;
+
 	for (count = 0; count < util.length;count++){
 		element = &(base[(count * util.typeSize)]);
 		
