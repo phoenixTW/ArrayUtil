@@ -51,3 +51,12 @@ void test_resize_an_existing_array_to_resize_increase_its_length(){
     dispose(array);
     dispose(resultArray);
 };
+
+void test_for_findLast_gives_the_last_element_of_less_than_float_value_an_array(){
+    float hint = 6.3;
+    float *result;
+    MatchFunc *match = &isLessThanTheHints;
+    ArrayUtil util = {(float[]){2.5,4.5,6.3,4.5,6.0},sizeof(float),5};
+    result = findFirst(util,match,&hint);
+    assert(*result == 2.5);
+};
