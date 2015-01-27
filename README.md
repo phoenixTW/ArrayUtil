@@ -57,3 +57,80 @@ int findIndex(ArrayUtil util, void* element)
 void dispose(ArrayUtil util)
 
 	-a method dispose to free the memory allocated for the Array inside array util
+
+                                    v1.3
+
+Implement a findFirst method to find the first element matching the criteria.
+
+    void* findFirst(ArrayUtil util, MatchFunc* match, void* hint);
+
+        - which returns the first element which matches the criteria or null if there is no match.
+
+        - where the signature of the MatchFunc is:
+
+    int MatchFunc(void* hint, void* item);
+
+        - which will return 0 in case of no match and 1 in case of match.
+
+As C language does not have closure, we have some hint that can be passed, which will help in customizing the match.
+
+for example:
+
+    int isEven(void* hint, void* item)
+
+        - can be used to find if a given number is even. Here the hint is not needed.
+
+    int isDivisible(void* hint, void* item)
+
+        - can be used to find if a given number is divisible by the number mentioned in the hint.
+
+                                    v1.4
+
+Implement a findLast method similar to findFirst
+
+                                    v1.5
+
+Implement a count method to count the number of elements matching the criteria.
+
+    int count(ArrayUtil util, MatchFunc* match, void* hint);
+
+                                    v1.6
+
+Implement a filter method to find the first n elements matching the criteria.
+
+    int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems );
+
+        - where destination is an array of pointers into which the address of the matching elements are copied onto. maxitems is the capacity of destination.
+
+        - The method returns the number of elements which matches the criteria that have been copied onto the destination.
+
+                                    v1.7
+
+Implement a map method.
+
+    void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint);
+
+        - maps source to destination using the provided convert function.
+        where the signature of the ConvertFunc is:
+
+    void ConvertFunc(void* hint, void* sourceItem, void* destinationItem);
+
+                                    v1.8
+
+Implement forEach method
+
+    void forEach(ArrayUtil util, OperationFunc* operation, void* hint);
+        - performs operation on all items in the array.
+
+        where the signature of the OperationFunc is:
+            void OperationFunc(void* hint, void* item);
+
+                                    v1.9
+
+Implement reduce method
+
+    void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue);
+        - returns the reduced answer.
+
+    where the signature of ReducerFunc is:
+        void* ReducerFunc(void* hint, void* previousItem, void* item);

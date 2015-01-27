@@ -153,8 +153,8 @@ void forEach(ArrayUtil util, OperationFunc* operation, void* hint) {
 	int count;
 	char* _util = (char*)util.base;
 
-	for(count = 0; count < (util.length * util.typeSize); count++)
-		operation(hint, &(_util[(count * util.typeSize)]));	
+	for(count = 0; count < util.length; ++count)
+		operation(hint, &(_util[(count * util.typeSize)]));
 }
 
 void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue) {

@@ -655,6 +655,26 @@ void test_forEach_should_return_a_new_array_by_adding_the_previous_array_element
 	dispose(util);
 }
 
+void addingBy1_1(void* hint, void* sourceItem){
+	*((float*)sourceItem) = *((float*)sourceItem) + (*((float*)(hint)));
+}
+
+void test_forEach_should_return_a_new_array_by_adding_the_previous_array_element_with_1_1 () {
+	ArrayUtil util = create(FLOAT_SIZE, 3),
+				expected = { (float[]){2.1, 3.1, 4.1}, FLOAT_SIZE, 3};
+	
+	float *base_array, hint = 1.1;
+	base_array = (float*)(util.base);
+
+	base_array[0] = 1.0;
+	base_array[1] = 2.0;
+	base_array[2] = 3.0;
+
+	forEach(util, addingBy1_1, &hint);
+	areEqual(util, expected);
+	dispose(util);
+}
+
 void* add(void* hint, void* previousItem, void* item){
 	int *a = (int*)malloc(sizeof(int));
 	*a = *(int*)previousItem + *(int*)item;
