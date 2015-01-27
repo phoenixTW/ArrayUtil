@@ -85,11 +85,4 @@ void test_findIndex_returns_4_for_float_array_if_search_element_is_at_4th_locati
     assertEqual(findIndex(util, &element),4);
 }
 
-// void test_findLast_gives_occurence_of_last_element_in_floatArray_greaterThan5 (){
-//     float hint = 5.1;
-//     float *result;
-//     MatchFunc *match = &isGreaterThanHint;
-//     ArrayUtil util = {(float[]){7.1,2.4,1.6,3.7,8.3,0.1},FLOAT_SIZE,6};
-//     result = (float*)findLast(util,match,(void*)&hint);
-//     assertEqual(result,(float)8.3);
-// }
+// 

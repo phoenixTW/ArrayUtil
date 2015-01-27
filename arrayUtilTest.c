@@ -572,5 +572,83 @@ void test_filter_should_return_4_as_the_number_of_matched_elements_for_character
 	free(destination);
 }
 
+void addBy1(void* hint, void* sourceItem, void* destinationItem){
+	(int*)destinationItem = *(int*)sourceItem * *(int*)(hint);
+}
 
+void test_map_should_return_a_new_array_by_adding_the_previous_array_element_with_1 () {
+	ArrayUtil destination = create(INT_SIZE, 3),
+				source = create(INT_SIZE, 3),
+				expected = { (int[]){2, 3, 4}, INT_SIZE, 3};
+	int *base_array, *newArray, hint = 1;
+	base_array = (int*)(source.base);
 
+	base_array[0] = 1;
+	base_array[1] = 2;
+	base_array[2] = 3;
+
+	map(source, destination, addBy1, &hint);
+	areEqual(source, expected);
+	dispose(source);
+	dispose(destination);
+}
+
+void addingBy1(void* hint, void* sourceItem){
+	(int*)sourceItem = *(int*)sourceItem + *(int*)(hint);
+}
+
+void test_forEach_should_return_a_new_array_by_adding_the_previous_array_element_with_1 () {
+	ArrayUtil util = create(INT_SIZE, 3),
+				expected = { (int[]){2, 3, 4}, INT_SIZE, 3};
+	
+	int *base_array, hint = 1;
+	base_array = (int*)(util.base);
+
+	base_array[0] = 1;
+	base_array[1] = 2;
+	base_array[2] = 3;
+
+	forEach(util, addingBy1, &hint);
+	areEqual(util, expected);
+	dispose(util);
+}
+
+void* add(void* hint, void* previousItem, void* item){
+	int *a = (int*)malloc(sizeof(int));
+	*a = *(int*)previousItem + *(int*)item;
+	return a;
+}
+
+void test_reduce_call_add_function_with_each_element_in_array_and_retruns_last_call_value (){
+	int hint = 0, initVlaue=0;
+	ArrayUtil util;
+	int *result;
+	util=(ArrayUtil){(int[]){1,2,3,4,5}, INT_SIZE, 5};
+	result = (int*)reduce(util, add, &hint, &initVlaue);
+	assertEqual(*result, 15);
+}
+
+// void* multipleBy2 (void* hint, void* previousItem, void* item) {
+// 	int *result;
+// 	printf("%d\n", *(int*)previousItem);
+// 	printf("%d\n", *(int*)item);
+// 	printf("%d\n", (*(int*)previousItem) * (*(int*)(item)));
+// 	result = (*(int*)previousItem) * (*(int*)(item));
+// 	printf("%d\n", result);
+// 	return result;
+// }
+
+// void test_reduce_should_return_a_10_after_add_all_of_the_elements () {
+// 	ArrayUtil util = create(INT_SIZE, 4);
+	
+// 	int *base_array, hint = 1, initial = 0, expected = 10;
+// 	base_array = (int*)(util.base);
+
+// 	base_array[0] = 1;
+// 	base_array[1] = 2;
+// 	base_array[2] = 3;
+// 	base_array[2] = 4;
+
+// 	assertEqual((int*)reduce(util, multipleBy2, &hint, &initial), expected);
+// 	dispose(util);
+// }

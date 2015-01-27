@@ -139,3 +139,32 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 
 	return total;
 }
+
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint) {
+	int count;
+	char* _source = (char*)source.base;
+	char* _destination = (char*)source.base;
+
+	for(count = 0; count < (source.length * source.typeSize); count++)
+		convert(hint, &(_source[(count * source.typeSize)]), &(_destination[(count * destination.typeSize)]));
+}
+
+void forEach(ArrayUtil util, OperationFunc* operation, void* hint) {
+	int count;
+	char* _util = (char*)util.base;
+
+	for(count = 0; count < (util.length * util.typeSize); count++)
+		operation(hint, &(_util[(count * util.typeSize)]));	
+}
+
+void* reduce(ArrayUtil util, ReducerFunc* reducer, void* hint, void* intialValue) {
+	int count;
+	char* base = (char*)util.base;
+	void* previous = intialValue ;
+	
+	for (count = 0; count < util.length; count++){
+		previous = reducer(hint, previous, &(base[(count * util.typeSize)]));
+	}
+	
+	return previous;
+}
