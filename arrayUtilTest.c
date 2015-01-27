@@ -593,6 +593,48 @@ void test_map_should_return_a_new_array_by_adding_the_previous_array_element_wit
 	dispose(destination);
 }
 
+void addBy1_1(void* hint, void* sourceItem, void* destinationItem){
+	*(float*)destinationItem = *(float*)sourceItem + *(float*)(hint);
+}
+
+void test_map_should_return_a_new_array_by_adding_the_previous_array_element_with_1_in_float () {
+	ArrayUtil destination = create(FLOAT_SIZE, 3),
+				source = create(FLOAT_SIZE, 3),
+				expected = { (float[]){2.1, 3.1, 4.1}, FLOAT_SIZE, 3};
+	float *base_array, *newArray, hint = 1.1;
+	base_array = (float*)(source.base);
+
+	base_array[0] = 1.0;
+	base_array[1] = 2.0;
+	base_array[2] = 3.0;
+
+	map(source, destination, addBy1_1, &hint);
+	areEqual(source, expected);
+	dispose(source);
+	dispose(destination);
+}
+
+void toUpperCase(void* hint, void* sourceItem, void* destinationItem){
+	*(char*)destinationItem = *(char*)sourceItem + *(char*)(hint);
+}
+
+void test_map_should_return_a_new_array_by_with_uppercase_character () {
+	ArrayUtil destination = create(CHAR_SIZE, 3),
+				source = create(CHAR_SIZE, 3),
+				expected = { (char[]){'A', 'B', 'C'}, CHAR_SIZE, 3};
+	char *base_array, *newArray, hint = 32;
+	base_array = (char*)(source.base);
+
+	base_array[0] = 'a';
+	base_array[1] = 'b';
+	base_array[2] = 'c';
+
+	map(source, destination, toUpperCase, &hint);
+	areEqual(source, expected);
+	dispose(source);
+	dispose(destination);
+}
+
 void addingBy1(void* hint, void* sourceItem){
 	(int*)sourceItem = *(int*)sourceItem + *(int*)(hint);
 }

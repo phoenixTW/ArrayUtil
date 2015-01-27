@@ -145,7 +145,7 @@ void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hi
 	char* _source = (char*)source.base;
 	char* _destination = (char*)source.base;
 
-	for(count = 0; count < (source.length * source.typeSize); count++)
+	for(count = 0; count < source.length; count++)
 		convert(hint, &(_source[(count * source.typeSize)]), &(_destination[(count * destination.typeSize)]));
 }
 
