@@ -615,7 +615,7 @@ void test_map_should_return_a_new_array_by_adding_the_previous_array_element_wit
 }
 
 void toUpperCase(void* hint, void* sourceItem, void* destinationItem){
-	*(char*)destinationItem = *(char*)sourceItem + *(char*)(hint);
+	*(char*)destinationItem = *(char*)sourceItem + *(int*)(hint);
 }
 
 void test_map_should_return_a_new_array_by_with_uppercase_character () {
@@ -670,27 +670,53 @@ void test_reduce_call_add_function_with_each_element_in_array_and_retruns_last_c
 	assertEqual(*result, 15);
 }
 
-// void* multipleBy2 (void* hint, void* previousItem, void* item) {
-// 	int *result;
-// 	printf("%d\n", *(int*)previousItem);
-// 	printf("%d\n", *(int*)item);
-// 	printf("%d\n", (*(int*)previousItem) * (*(int*)(item)));
-// 	result = (*(int*)previousItem) * (*(int*)(item));
-// 	printf("%d\n", result);
-// 	return result;
-// }
+void* multipleBy2 (void* hint, void* previousItem, void* item) {
+	int *a = (int*)malloc(sizeof(int));
+	*a = *(int*)previousItem * *(int*)item;
+	return a;
+}
 
-// void test_reduce_should_return_a_10_after_add_all_of_the_elements () {
-// 	ArrayUtil util = create(INT_SIZE, 4);
+void test_reduce_should_return_a_10_after_add_all_of_the_elements () {
+	ArrayUtil util = create(INT_SIZE, 4);
 	
-// 	int *base_array, hint = 1, initial = 0, expected = 10;
-// 	base_array = (int*)(util.base);
+	int *base_array, hint = 1, initial = 0, expected = 0;
+	base_array = (int*)(util.base);
 
-// 	base_array[0] = 1;
-// 	base_array[1] = 2;
-// 	base_array[2] = 3;
-// 	base_array[2] = 4;
+	base_array[0] = 1;
+	base_array[1] = 2;
+	base_array[2] = 3;
+	base_array[2] = 4;
 
-// 	assertEqual((int*)reduce(util, multipleBy2, &hint, &initial), expected);
-// 	dispose(util);
-// }
+	assertEqual(*(int*)reduce(util, multipleBy2, &hint, &initial), expected);
+	dispose(util);
+}
+
+void* add_2_1(void* hint, void* previousItem, void* item){
+	float *a = (float*)malloc(sizeof(float));
+	*a = *(float*)previousItem + *(float*)item;
+	return a;
+}
+
+void test_reduce_call_add_function_with_each_element_in_array_and_retruns_15_5 (){
+	float hint = 0.0, initVlaue = 0.0;
+	ArrayUtil util;
+	float *result;
+	util=(ArrayUtil){(float[]){1.1, 2.1, 3.1, 4.1, 5.1}, FLOAT_SIZE, 5};
+	result = (float*)reduce(util, add_2_1, &hint, &initVlaue);
+	assertEqual(*result, 15.5);
+}
+
+void* isGreater(void* hint, void* previousItem, void* item){
+	char *a = (char*)malloc(sizeof(char));
+	*a = *(char*)previousItem > *(char*)item ? *(char*)previousItem : *(char*)item;
+	return a;
+}
+
+void test_reduce_returns_z_as_a_greater_value_from_a_array_in_lowercase (){
+	char hint = 'a', initVlaue = 'a';
+	ArrayUtil util;
+	char *result;
+	util=(ArrayUtil){(char[]){'a', 'b', 'z', 'd', 'e'}, CHAR_SIZE, 5};
+	result = (char*)reduce(util, isGreater, &hint, &initVlaue);
+	assertEqual(*result, 'z');
+}
